@@ -72,6 +72,8 @@ class PairLatchAccountWizard(models.TransientModel):
         if not _api:
             return
         response = _api.pair(self.pairing_code)
+        if not response.get_data():
+            return
         if 'accountId' not in response.get_data():
             raise ValidationError('A problem with pairing process occurred')
         self.env.user.write({
