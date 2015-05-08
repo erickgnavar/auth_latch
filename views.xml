@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="pair_latch_account_wizard_form" model="ir.ui.view">
+            <field name="name">pair.latch.account.wizard.form</field>
+            <field name="model">pair.latch.account.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="pairing_code"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="pair" type="object" string="Pair" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_open_latch_pair_latch_account_wizard" model="ir.actions.act_window">
+            <field name="name">Pairing latch account</field>
+            <field name="res_model">pair.latch.account.wizard</field>
+            <field name="view_type">form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="pair_latch_account_wizard_form"/>
+        </record>
+        <record id="res_users_preferences_extended_form" model="ir.ui.view">
+            <field name="name">res.users.preferences.extended.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='preference_change_password']" position="after">
+                    <button name="%(action_open_latch_pair_latch_account_wizard)d" type="action" string="Pair Latch account" class="oe_link"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

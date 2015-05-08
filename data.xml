@@ -1,0 +1,12 @@
+<openerp>
+    <data>
+        <record id="latch_app_id_parameter" model="ir.config_parameter">
+            <field name="key">latch.app.id</field>
+            <field name="value" eval="''"/>
+        </record>
+        <record id="latch_secret_key_parameter" model="ir.config_parameter">
+            <field name="key">latch.secret.key</field>
+            <field name="value" eval="''"/>
+        </record>
+    </data>
+</openerp>
