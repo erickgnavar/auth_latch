@@ -1,4 +1,4 @@
-### Odoo latch login module
+### Odoo latch auth module
 
 #### Requirements
 

@@ -1,7 +1,7 @@
 # coding: utf-8
 
 {
-    'name': 'Latch login',
+    'name': 'Latch auth',
     'description': 'Authentication with Latch service',
     'version': '1.0',
     'author': 'Erick Navarro',
