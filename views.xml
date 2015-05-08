@@ -34,7 +34,9 @@
             <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='preference_change_password']" position="after">
-                    <button name="%(action_open_latch_pair_latch_account_wizard)d" type="action" string="Pair Latch account" class="oe_link"/>
+                    <field name="latch_paired" invisible="1"/>
+                    <button name="%(action_open_latch_pair_latch_account_wizard)d" type="action" string="Pair Latch account" class="oe_link" attrs="{'invisible': [('latch_paired', '=', True)]}"/>
+                    <button name="latch_unpair" type="object" string="Unpair Latch account" class="oe_link" attrs="{'invisible': [('latch_paired', '=', False)]}"/>
                 </xpath>
             </field>
         </record>
