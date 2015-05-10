@@ -1,14 +1,20 @@
 # coding: utf-8
+import logging
+
 from openerp import models, fields, api
 from openerp.exceptions import ValidationError, AccessDenied
 
 from latch import latch
 
 
+_logger = logging.getLogger(__name__)
+
+
 def _get_api(obj):
     app_id = obj.env['ir.config_parameter'].get_param('latch.app.id')
     secret_key = obj.env['ir.config_parameter'].get_param('latch.secret.key')
-    if not app_id or not secret_key:  # TODO: add log entry
+    if not app_id or not secret_key:
+        _logger.warning('Latch setup incomplete, please fill the config parameters')
         return False
     return latch.Latch(app_id, secret_key)
 
@@ -42,6 +48,8 @@ class User(models.Model):
         if not user['latch_account_id'] or not user['latch_account_id']:
             return
         response = _api.status(user['latch_account_id'])
+        if not response.get_data():
+            return
         # FIXME: find a better way to check by operations
         data = response.get_data()
         status = data['operations'][data['operations'].keys()[0]]['status']
@@ -73,7 +81,7 @@ class PairLatchAccountWizard(models.TransientModel):
             return
         response = _api.pair(self.pairing_code)
         if not response.get_data():
-            return
+            raise ValidationError('Wrong pair code')
         if 'accountId' not in response.get_data():
             raise ValidationError('A problem with pairing process occurred')
         self.env.user.write({
